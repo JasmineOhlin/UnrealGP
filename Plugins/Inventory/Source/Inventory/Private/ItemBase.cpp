@@ -18,9 +18,27 @@ void AItemBase::BeginPlay()
 	
 }
 
+void AItemBase::OnConstruction(const FTransform& Transform)
+{
+	if (GetWorld()->WorldType == EWorldType::Editor)
+	{
+		Item.Id = FGuid::NewGuid();
+	}
+}
+
+void AItemBase::SetOwnedGameplayTags(const FGameplayTagContainer& NewContainer)
+{
+	OwnedGPTs = NewContainer;
+}
+
 // Called every frame
 void AItemBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+}
+
+void AItemBase::GetOwnedGameplayTags(FGameplayTagContainer& TagContainer) const
+{
+	TagContainer = OwnedGPTs;
 }
 
